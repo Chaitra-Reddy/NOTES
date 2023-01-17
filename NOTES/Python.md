@@ -1068,20 +1068,314 @@ print('**op5 -> ', thislist)
 ```
 
 ## Loop Lists
+```python
+# Loop Through a List using for loop
+thislist = ["apple", "banana", "cherry"]
+print('**op1 -> ')
+for x in thislist:
+  print(x)
 
-something
+# Loop Through the Index Numbers
+print('**op2 -> ')
+for i in range(len(thislist)):
+  print(thislist[i])
 
+# Using a While Loop
+i = 0
+print('**op3 -> ')
+while i < len(thislist):
+  print(thislist[i])
+  i = i + 1
+    
+# Looping Using List Comprehension
+print('**op4 -> ')
+[print(x) for x in thislist]
 
+##### OUTPUT
+**op1 -> 
+apple
+banana
+cherry
+**op2 -> 
+apple
+banana
+cherry
+**op3 -> 
+apple
+banana
+cherry
+**op4 -> 
+apple
+banana
+cherry
+```
 
+## List Comprehension
+- Syntax is `newlist = [expression for item in iterable if condition == True]`. The return value is a new list, leaving the old list unchanged.
+```python
+# fruits with the letter "a" in the name
+# without list comprehension
+fruits = ["apple", "banana", "cherry", "kiwi", "mango"]
+newlist = []
+for x in fruits:
+  if "a" in x:
+    newlist.append(x)
+print('**op1 -> ', newlist)
 
+# with list comprehension
+newlist = [x for x in fruits if "a" in x]
+print('**op2 -> ', newlist)
 
+# with condition
+newlist = [x for x in fruits if x != "apple"]
+print('**op3 -> ', newlist)
 
+# The condition is optional and can be omitted
+newlist = [x for x in fruits]
+print('**op4 -> ', newlist)
 
+# Iterable (use the range() function to create an iterable)
+newlist = [x for x in range(10)]
+print('**op5 -> ', newlist)
 
+# Accept only numbers lower than 5
+newlist = [x for x in range(10) if x < 5]
+print('**op6 -> ', newlist)
 
+# Expression (The expression is the current item in the iteration, but it is also the outcome, which you can manipulate before it ends up like a list item in the new list)
+# Set the values in the new list to upper case:
+newlist = [x.upper() for x in fruits]
+print('**op7 -> ', newlist)
 
+# Set all values in the new list to 'hello'
+newlist = ['hello' for x in fruits]
+print('**op8 -> ', newlist)
 
+# The expression can also contain conditions, not like a filter, but as a way to manipulate the outcome
+# Return "orange" instead of "banana" => "Return the item if it is not banana, if it is banana return orange".
+newlist = [x if x != "banana" else "orange" for x in fruits]
+print('**op9 -> ', newlist)
 
+##### OUTPUT
+**op1 ->  ['apple', 'banana', 'mango']
+**op2 ->  ['apple', 'banana', 'mango']
+**op3 ->  ['banana', 'cherry', 'kiwi', 'mango']
+**op4 ->  ['apple', 'banana', 'cherry', 'kiwi', 'mango']
+**op5 ->  [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+**op6 ->  [0, 1, 2, 3, 4]
+**op7 ->  ['APPLE', 'BANANA', 'CHERRY', 'KIWI', 'MANGO']
+**op8 ->  ['hello', 'hello', 'hello', 'hello', 'hello']
+**op9 ->  ['apple', 'orange', 'cherry', 'kiwi', 'mango']
+```
+
+## Sort Lists
+- List objects have a sort() method that will sort the list alphanumerically, ascending, by default
+- You can also customize your own sort function by using the keyword argument `key = function`.
+- By default the sort() method is **case sensitive**, resulting in all capital letters being sorted before lower case letters
+- So if you want a case-insensitive sort function, use str.lower as a key function
+- The `reverse()` method reverses the current sorting order of the elements
+```python
+# Sort List Alphanumerically
+thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]
+thislist.sort()
+print('**op1 -> ', thislist)
+
+# Sort the list numerically
+thislist = [100, 50, 65, 82, 23]
+thislist.sort()
+print('**op2 -> ', thislist)
+
+# Sort Descending
+thislist = ["orange", "mango", "kiwi", "pineapple", "banana"]
+thislist.sort(reverse = True)
+print('**op3 -> ', thislist)
+
+thislist = [100, 50, 65, 82, 23]
+thislist.sort(reverse = True)
+print('**op4 -> ', thislist)
+
+# Customize Sort Function (Sort the list based on how close the number is to 50):
+def myfunc(n):
+  return abs(n - 50)
+
+thislist = [100, 50, 65, 82, 23]
+thislist.sort(key = myfunc)
+print('**op5 -> ', thislist)
+
+# Case sensitive sorting can give an unexpected result
+thislist = ["banana", "Orange", "Kiwi", "cherry"]
+thislist.sort()
+print('**op6 -> ', thislist)
+
+# Perform a case-insensitive sort of the list:
+thislist = ["banana", "Orange", "Kiwi", "cherry"]
+thislist.sort(key = str.lower)
+print('**op7 -> ', thislist)
+
+# Reverse the order of the list items:
+thislist = ["banana", "Orange", "Kiwi", "cherry"]
+thislist.reverse()
+print('**op8 -> ', thislist)
+
+##### OUTPUT
+**op1 ->  ['banana', 'kiwi', 'mango', 'orange', 'pineapple']
+**op2 ->  [23, 50, 65, 82, 100]
+**op3 ->  ['pineapple', 'orange', 'mango', 'kiwi', 'banana']
+**op4 ->  [100, 82, 65, 50, 23]
+**op5 ->  [50, 65, 23, 82, 100]
+**op6 ->  ['Kiwi', 'Orange', 'banana', 'cherry']
+**op7 ->  ['banana', 'cherry', 'Kiwi', 'Orange']
+**op8 ->  ['cherry', 'Kiwi', 'Orange', 'banana']
+```
+
+## Copy Lists
+- You cannot copy a list simply by typing `list2 = list1`, because: `list2` will only be a reference to `list1`, and changes made in `list1` will automatically also be made in `list2`
+- One way is to use the built-in List method `copy()`
+- Another way to make a copy is to use the built-in method `list()`
+```python
+# Make a copy of a list with the copy() method:
+thislist = ["apple", "banana", "cherry"]
+mylist = thislist.copy()
+print('**op1 -> ', mylist)
+
+# Make a copy of a list with the list() method:
+thislist = ["apple", "banana", "cherry"]
+mylist = list(thislist)
+print('**op2 -> ', mylist)
+
+##### OUTPUT
+**op1 ->  ['apple', 'banana', 'cherry']
+**op2 ->  ['apple', 'banana', 'cherry']
+```
+
+## Join Lists
+```python
+# Join two list using + operator:
+list1 = ["a", "b", "c"]
+list2 = [1, 2, 3]
+list3 = list1 + list2
+print('**op1 -> ', list3)
+
+# Another way to join two lists is by appending all the items from list2 into list1, one by one:
+list1 = ["a", "b" , "c"]
+list2 = [1, 2, 3]
+for x in list2:
+  list1.append(x)
+print('**op2 -> ', list1)
+
+# Or you can use the extend() method, which purpose is to add elements from one list to another list:
+list1 = ["a", "b" , "c"]
+list2 = [1, 2, 3]
+list1.extend(list2)
+print('**op3 -> ', list1)
+
+##### OUTPUT
+**op1 ->  ['a', 'b', 'c', 1, 2, 3]
+**op2 ->  ['a', 'b', 'c', 1, 2, 3]
+**op3 ->  ['a', 'b', 'c', 1, 2, 3]
+```
+
+## List Methods
+- Python has a set of built-in methods that you can use on lists.
+<table class="ws-table-all notranslate">
+<tbody><tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+<tr><td><a href="ref_list_append.asp">append()</a></td><td>Adds an element at 
+  the end of the list</td></tr>
+<tr><td><a href="ref_list_clear.asp">clear()</a></td><td>Removes all the 
+  elements from the list</td></tr>
+<tr><td><a href="ref_list_copy.asp">copy()</a></td><td>Returns a copy of the 
+  list</td></tr>
+<tr><td><a href="ref_list_count.asp">count()</a></td><td>Returns the number of 
+  elements with the specified value</td></tr>
+<tr><td><a href="ref_list_extend.asp">extend()</a></td><td>Add the elements of a 
+  list (or any iterable), to the end of the current list</td></tr>
+<tr><td><a href="ref_list_index.asp">index()</a></td><td>Returns the index of 
+  the first element with the specified value</td></tr>
+<tr><td><a href="ref_list_insert.asp">insert()</a></td><td>Adds an element at 
+  the specified position</td></tr>
+<tr><td><a href="ref_list_pop.asp">pop()</a></td><td>Removes the element at the 
+  specified position</td></tr>
+<tr><td><a href="ref_list_remove.asp">remove()</a></td><td>Removes the  
+  item with the specified value</td></tr>
+<tr><td><a href="ref_list_reverse.asp">reverse()</a></td><td>Reverses the order 
+  of the list</td></tr>
+<tr><td><a href="ref_list_sort.asp">sort()</a></td><td>Sorts the list</td></tr>
+</tbody></table>
+<br><br>
+
+# Tuples
+---
+<br>
+
+- used to store multiple items in a single variable
+- Tuple items are **ordered** *(items have a defined order, and that order will not change)*, **unchangeable** *(we cannot change, add or remove items after the tuple has been created)*, and **allow duplicate values** *(they can have items with the same value)*
+- Tuples are written with round brackets
+- Tuple items are **indexed**
+
+> **Note: When creating a tuple with only one item, remember to include a comma after the item, otherwise it will not be identified as a tuple.**
+
+```python
+# Create a Tuple (way 1)
+thistuple = ("apple", "banana", "cherry")
+print('**op1 -> ', thistuple)
+
+# Create a Tuple (way 2)
+thistuple = tuple(("apple", "banana", "cherry")) # note the double round-brackets
+print('**op2 -> ', thistuple)
+
+##### OUTPUT
+**op1 ->  ('apple', 'banana', 'cherry')
+**op2 ->  ('apple', 'banana', 'cherry')
+```
+
+## Access Tuple Items
+
+*----- SAME AS LISTS ------*
+
+## Update Tuples
+```python
+# Change Tuple Values
+x = ("apple", "banana", "cherry")
+y = list(x)
+y[1] = "kiwi"
+x = tuple(y)
+print('**op1 -> ', x)
+
+# Add Items (approach 1 - Convert into a list)
+thistuple = ("apple", "banana", "cherry")
+y = list(thistuple)
+y.append("orange")
+thistuple = tuple(y)
+print('**op2 -> ', thistuple)
+
+# Add Items (approach 2 - Add tuple to a tuple)
+thistuple = ("apple", "banana", "cherry")
+y = ("orange",)
+thistuple += y
+print('**op3 -> ', thistuple)
+
+# Remove Items
+thistuple = ("apple", "banana", "cherry")
+y = list(thistuple)
+y.remove("apple")
+thistuple = tuple(y)
+print('**op4 -> ', thistuple)
+
+# delete the tuple
+thistuple = ("apple", "banana", "cherry")
+del thistuple
+
+##### OUTPUT
+**op1 ->  ('apple', 'kiwi', 'cherry')
+**op2 ->  ('apple', 'banana', 'cherry', 'orange')
+**op3 ->  ('apple', 'banana', 'cherry', 'orange')
+**op4 ->  ('banana', 'cherry')
+```
+
+## Unpack Tuples
 
 
 
