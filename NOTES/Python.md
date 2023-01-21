@@ -1,6 +1,73 @@
-# Introduction To Python
+- [Introduction To Python](#introduction-to-python)
+  - [Python key features :](#python-key-features-)
+  - [Python background :](#python-background-)
+  - [Variables :](#variables-)
+  - [Garbage collection :](#garbage-collection-)
+  - [Data Types :](#data-types-)
+    - [Setting the data type :](#setting-the-data-type-)
+    - [Setting the specific data type :](#setting-the-specific-data-type-)
+  - [Operators :](#operators-)
+    - [Arithmetic operators :](#arithmetic-operators-)
+    - [Assignment operators :](#assignment-operators-)
+    - [Comparison operators :](#comparison-operators-)
+    - [Logical operators :](#logical-operators-)
+    - [Identity operators :](#identity-operators-)
+    - [Membership operators :](#membership-operators-)
+    - [Bitwise operators :](#bitwise-operators-)
+- [Strings](#strings)
+  - [Slicing Strings :](#slicing-strings-)
+  - [Python - Modify Strings :](#python---modify-strings-)
+  - [String Concatenation :](#string-concatenation-)
+  - [Format - Strings](#format---strings)
+  - [Escape Characters](#escape-characters)
+  - [String Methods](#string-methods)
+- [Lists](#lists)
+  - [Access List Items](#access-list-items)
+  - [Change List Items](#change-list-items)
+  - [Add List Items](#add-list-items)
+  - [Remove List Items](#remove-list-items)
+  - [Loop Lists](#loop-lists)
+  - [List Comprehension](#list-comprehension)
+  - [Sort Lists](#sort-lists)
+  - [Copy Lists](#copy-lists)
+  - [Join Lists](#join-lists)
+  - [List Methods](#list-methods)
+- [Tuples](#tuples)
+  - [Access Tuple Items](#access-tuple-items)
+  - [Update Tuples](#update-tuples)
+  - [Unpack Tuples](#unpack-tuples)
+  - [Loop Tuples](#loop-tuples)
+  - [Join Tuples](#join-tuples)
+  - [Tuple Methods](#tuple-methods)
+- [Sets](#sets)
+  - [Access Set Items](#access-set-items)
+  - [Add Set Items](#add-set-items)
+  - [Remove Set Items](#remove-set-items)
+  - [Loop Sets](#loop-sets)
+  - [Join Sets](#join-sets)
+  - [Set Methods](#set-methods)
+- [Dictionaries](#dictionaries)
+  - [Access Dictionary Items](#access-dictionary-items)
+  - [Change Dictionary Items](#change-dictionary-items)
+  - [Add Dictionary Items](#add-dictionary-items)
+  - [Remove Dictionary Items](#remove-dictionary-items)
+  - [Loop Dictionaries](#loop-dictionaries)
+  - [Copy Dictionaries](#copy-dictionaries)
+  - [Dictionary Methods](#dictionary-methods)
+- [Conditional Execution & Loops](#conditional-execution--loops)
+- [Comprehensions](#comprehensions)
+  - [List Comprehensions:](#list-comprehensions)
+  - [Dictionary Comprehensions](#dictionary-comprehensions)
+  - [Set Comprehensions](#set-comprehensions)
+  - [Generator Comprehensions](#generator-comprehensions)
+- [Functions](#functions)
+  - [Recursion](#recursion)
+
 ---
+
 <br /><br />
+
+# Introduction To Python
 
 ## Python key features :
 - General purpose language
@@ -9,7 +76,8 @@
 - High level (easy for humans to understand)
 - Memory efficient (variables with same value will point to the same memory location instead of having two copies)
 
-##
+--- 
+
 1) `General purpose languge` - Becoz it can be used for machine learning, GUI, web development, software development etc.
    
 2) `Interpreted` - Running code line by line => the instruction is executed line by line and not compiling the whole program earlier into machine language. **Python is both compiled and interpreted**. Compilation happens internally i.e. byte code is generated internally and converted to give output using python virtual machine (p.v.m). To prove that, run a .py where another .py file is imported, a pycache folder will be generated which will contain a .pyc file, which is the byte code generated after after compilation of the imported file. So next time when i run the same file, it will not be compiling the imported file
@@ -517,8 +585,6 @@ the rightmost bits fall off</td>
 <br /><br />
 
 # Strings
----
-<br>
 
 - Strings in python are surrounded by either single quotation marks, or double quotation marks
 - You can assign a multiline string to a variable by using three quotes
@@ -909,8 +975,6 @@ print('**op3 -> ', myorder.format(quantity, itemno, price))
 <br><br>
 
 # Lists
----
-<br>
 
 - Lists are used to store multiple items in a single variable
 - List items are ordered, changeable, and **allow duplicate values**
@@ -1307,8 +1371,6 @@ print('**op3 -> ', list1)
 <br><br>
 
 # Tuples
----
-<br>
 
 - used to store multiple items in a single variable
 - Tuple items are **ordered** *(items have a defined order, and that order will not change)*, **unchangeable** *(we cannot change, add or remove items after the tuple has been created)*, and **allow duplicate values** *(they can have items with the same value)*
@@ -1376,13 +1438,774 @@ del thistuple
 ```
 
 ## Unpack Tuples
+- When we create a tuple, we normally assign values to it. This is called *packing* a tuple
+- But, in Python, we are also allowed to extract the values back into variables. This is called *unpacking*
+- If the number of variables is less than the number of values, you can add an **astrisk** to the variable name and the values will be assigned to the variable as a list
+- If the asterisk is added to another variable name than the last, Python will assign values to the variable until the number of values left matches the number of variables left.
+```python
+# Packing a tuple:
+fruits = ("apple", "banana", "cherry")
+print('**op1 -> ', fruits)
 
+# Unpacking a tuple [NOTE: The number of variables must match the number of values in the tuple, if not, you must use an asterisk to collect the remaining values as a list.]
+(green, yellow, red) = fruits
+print('**op2 -> ')
+print(green)
+print(yellow)
+print(red)
 
+# Using Asterisk* on last variable
+fruits = ("apple", "banana", "cherry", "strawberry", "raspberry")
+(green, yellow, *red) = fruits
+print('**op3 -> ')
+print(green)
+print(yellow)
+print(red)
 
+# Using Asterisk* on not the last variable
+fruits = ("apple", "banana", "cherry", "strawberry", "raspberry")
+(green, *yellow, red) = fruits
+print('**op4 -> ')
+print(green)
+print(yellow)
+print(red)
 
+###### OUTPUT
+**op1 ->  ('apple', 'banana', 'cherry')
+**op2 -> 
+apple
+banana
+cherry
+**op3 -> 
+apple
+banana
+['cherry', 'strawberry', 'raspberry']
+**op4 -> 
+apple
+['banana', 'cherry', 'strawberry']
+raspberry
+```
+## Loop Tuples
 
+*----- SAME AS LISTS ------*
 
+## Join Tuples
 
+```python
+# Join two tuples using + operator :
+tuple1 = ("a", "b" , "c")
+tuple2 = (1, 2, 3)
+tuple3 = tuple1 + tuple2
+print('**op1 -> ', tuple3)
+
+# Multiply Tuples
+fruits = ("apple", "banana", "cherry")
+mytuple = fruits * 2
+print('**op3 -> ', mytuple)
+
+###### OUTPUT
+**op1 ->  ('a', 'b', 'c', 1, 2, 3)
+**op3 ->  ('apple', 'banana', 'cherry', 'apple', 'banana', 'cherry')
+```
+
+## Tuple Methods
+
+<table class="ws-table-all notranslate">
+<tbody><tr>
+<th style="width:20%">Method</th>
+<th>Description</th>
+</tr>
+<tr><td><a href="ref_tuple_count.asp">count()</a></td><td>Returns the number of times a specified value occurs in a tuple</td></tr>
+<tr><td><a href="ref_tuple_index.asp">index()</a></td><td>Searches the tuple for a specified value and returns the position of where it was found</td></tr>
+</tbody></table>
+
+# Sets
+
+- used to store multiple items in a single variable
+- A set is a collection which is unordered, unchangeable, and unindexed
+- Set items are **unchangeable**, but you can remove items and add new items
+- Sets are **unordered**, so you cannot be sure in which order the items will appear.
+- Sets **do not allow duplicate values**
+- A set can contain different data types
+
+```python
+# Duplicate values will be ignored:
+thisset = {"apple", "banana", "cherry", "apple"}
+print('**op1 -> ', thisset)
+
+# Using the set() constructor to make a set:
+thisset = set(("apple", "banana", "cherry")) # note the double round-brackets
+print('**op2 -> ', thisset)
+
+###### OUTPUT
+**op1 ->  {'banana', 'cherry', 'apple'}
+**op2 ->  {'banana', 'cherry', 'apple'}
+```
+
+## Access Set Items
+- You **cannot access** items in a set by referring to an index or a key
+- But you can loop through the set items using a **for loop**, or ask if a specified value is present in a set, by using the **in** keyword
+
+## Add Set Items
+
+```python
+# Add an item to a set, using the add() method:
+thisset = {"apple", "banana", "cherry"}
+thisset.add("orange")
+print('**op1 -> ', thisset)
+
+# To add items from another set into the current set, use the update() method.
+thisset = {"apple", "banana", "cherry"}
+tropical = {"pineapple", "mango", "papaya"}
+thisset.update(tropical)
+print('**op2 -> ', thisset)
+
+# Add Any Iterable
+thisset = {"apple", "banana", "cherry"}
+mylist = ["kiwi", "orange"]
+thisset.update(mylist)
+print('**op3 -> ', thisset)
+
+##### OUTPUT
+**op1 ->  {'banana', 'cherry', 'apple', 'orange'}
+**op2 ->  {'papaya', 'cherry', 'apple', 'mango', 'banana', 'pineapple'}
+**op3 ->  {'orange', 'kiwi', 'cherry', 'apple', 'banana'}
+```
+
+## Remove Set Items
+
+```python
+# Remove by using the remove() method
+# Note: If the item to remove does not exist, remove() will raise an error.
+thisset = {"apple", "banana", "cherry"}
+thisset.remove("banana")
+print('**op1 -> ', thisset)
+
+# Remove by using the discard() method:
+# Note: If the item to remove does not exist, discard() will NOT raise an error.
+thisset = {"apple", "banana", "cherry"}
+thisset.discard("banana")
+print('**op2 -> ', thisset)
+
+# Remove a random item by using the pop() method:
+# Sets are unordered, so when using the pop() method, you do not know which item that gets removed.
+thisset = {"apple", "banana", "cherry"}
+x = thisset.pop()
+print('**op3 -> ')
+print(x)
+print(thisset)
+
+# The clear() method empties the set:
+thisset = {"apple", "banana", "cherry"}
+thisset.clear()
+print('**op4 -> ', thisset)
+
+# The del keyword will delete the set completely:
+thisset = {"apple", "banana", "cherry"}
+del thisset
+
+###### OUTPUT
+**op1 ->  {'cherry', 'apple'}
+**op2 ->  {'cherry', 'apple'}
+**op3 -> 
+banana
+{'cherry', 'apple'}
+**op4 ->  set()
+```
+
+## Loop Sets
+- You can loop through the set items by using a for loop
+- Can't use while loop since indexing doesn't work in sets
+
+## Join Sets
+
+```python
+# union() method that returns a new set containing all items from both sets
+set1 = {"a", "b" , "c"}
+set2 = {1, 2, 3}
+set3 = set1.union(set2)
+print('**op1 -> ', set3)
+
+# update() method that inserts all the items from one set into another:
+set1 = {"a", "b" , "c"}
+set2 = {1, 2, 3}
+set1.update(set2)
+print('**op2 -> ', set1)
+
+# Note: Both union() and update() will exclude any duplicate items
+
+##### OUTPUT
+**op1 ->  {1, 'b', 2, 3, 'c', 'a'}
+**op2 ->  {1, 'b', 2, 3, 'c', 'a'}
+```
+
+## Set Methods
+
+<table class="ws-table-all notranslate">
+<tbody><tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+<tr><td><a href="ref_set_add.asp">add()</a></td><td>Adds an element to the 
+  set</td></tr>
+<tr><td><a href="ref_set_clear.asp">clear()</a></td><td>Removes all the 
+  elements from the set</td></tr>
+<tr><td><a href="ref_set_copy.asp">copy()</a></td><td>Returns a copy of the set</td></tr>
+  <tr>
+    <td><a href="ref_set_difference.asp">difference()</a></td><td>Returns a set 
+    containing the difference between two or more sets</td>
+  </tr>
+  <tr>
+    <td><a href="ref_set_difference_update.asp">difference_update()</a></td><td>Removes the 
+    items in this set that are also included in another, specified set</td>
+  </tr>
+<tr><td><a href="ref_set_discard.asp">discard()</a></td><td>Remove the specified 
+  item</td></tr>
+  <tr>
+    <td><a href="ref_set_intersection.asp">intersection()</a></td><td>Returns a set, 
+    that is the intersection of two other sets</td>
+  </tr>
+<tr><td><a href="ref_set_intersection_update.asp">intersection_update()</a></td><td>
+  Removes the items in this set that are not present in other, specified set(s)</td></tr>
+  <tr>
+    <td><a href="ref_set_isdisjoint.asp">isdisjoint()</a></td><td>Returns whether 
+    two sets have a intersection or not</td>
+  </tr>
+  <tr>
+    <td><a href="ref_set_issubset.asp">issubset()</a></td><td>Returns whether 
+    another set contains this set or not</td>
+  </tr>
+<tr><td><a href="ref_set_issuperset.asp">issuperset()</a></td><td>Returns whether 
+  this set contains another set or not</td></tr>
+<tr><td><a href="ref_set_pop.asp">pop()</a></td><td>Removes an element from the 
+  set</td></tr>
+<tr><td><a href="ref_set_remove.asp">remove()</a></td><td>Removes the specified element</td></tr>
+  <tr>
+    <td><a href="ref_set_symmetric_difference.asp">symmetric_difference()</a></td><td>Returns 
+    a set with the symmetric differences of two sets</td>
+  </tr>
+<tr><td><a href="ref_set_symmetric_difference_update.asp">symmetric_difference_update()</a></td><td>
+  inserts the symmetric differences from this set and another</td></tr>
+  <tr>
+    <td><a href="ref_set_union.asp">union()</a></td><td>Return a set containing 
+    the union of sets</td>
+  </tr>
+<tr><td><a href="ref_set_update.asp">update()</a></td><td>Update the set with the 
+  union of this set and others</td></tr>
+</tbody></table>
+
+# Dictionaries
+- used to store data values in **key:value** pairs.
+- A dictionary is a collection which is ordered, changeable and do not allow duplicates.
+- When we say that **dictionaries are ordered**, it means that the items have a defined order, and that order will not change.
+- As of Python version 3.7, dictionaries are ordered. In Python 3.6 and earlier, dictionaries are unordered.
+- **Dictionaries are changeable**, meaning that we can change, add or remove items after the dictionary has been created.
+- **Duplicates Not Allowed** -> Dictionaries cannot have two items with the same key
+- ways to create dict:<br>
+  `thisdict = dict(name = "John", age = 36, country = "Norway")`<br>
+  `thisdict = {"brand": "Ford", "model": "Mustang", "year": 1964}`
+- `OrderedDict` has two extra features (methods) that a regular Dictionary doesn’t have — `reversed` and `move_to_end`
+
+## Access Dictionary Items
+
+```python
+# access the items of a dictionary by referring to its key name, inside square brackets:
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+x = thisdict["model"]
+print('**op1 -> ', x)
+
+# using a method called get()
+x = thisdict.get("model")
+print('**op2 -> ', x)
+
+# Get ist of all the keys in the dictionary.
+x = thisdict.keys()
+print('**op3 -> ', x)
+
+# Get ist of all the values in the dictionary.
+x = thisdict.values()
+print('**op4 -> ', x)
+
+# Get Items - items() method will return each item in a dictionary, as tuples in a list.
+x = thisdict.items()
+print('**op5 -> ', x)
+
+# NOTE : if u change the original dict after reading the list of keys/values/items, the list will automatically get updated
+
+# Check if Key Exists
+if "model" in thisdict:
+  print('**op6 -> Yes!!')
+
+##### OUTPUT
+**op1 ->  Mustang
+**op2 ->  Mustang
+**op3 ->  dict_keys(['brand', 'model', 'year'])
+**op4 ->  dict_values(['Ford', 'Mustang', 1964])
+**op5 ->  dict_items([('brand', 'Ford'), ('model', 'Mustang'), ('year', 1964)])
+**op6 -> Yes!!
+```
+
+## Change Dictionary Items
+
+```python
+# Change Values
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict["year"] = 2018
+print('**op1 -> ', thisdict)
+
+# Update Dictionary
+# The update() method will update the dictionary with the items from the given argument
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict.update({"year": 2020})
+thisdict.update({"color": 'black'})
+print('**op2 -> ', thisdict)
+
+##### OUTPUT
+**op1 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 2018}
+**op2 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 2020, 'color': 'black'}
+```
+
+## Add Dictionary Items
+
+```python
+# Adding an item -> done by using a new index key and assigning a value to it:
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict["color"] = "red"
+print('**op1 -> ', thisdict)
+
+# The update() method will update the dictionary with the items from a given argument. If the item does not exist, the item will be added.
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict.update({"color": "red"})
+print('**op2 -> ', thisdict)
+
+##### OUTPUT
+**op1 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 1964, 'color': 'red'}
+**op2 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 1964, 'color': 'red'}
+```
+
+## Remove Dictionary Items
+
+```python
+# pop() method removes the item with the specified key name
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict.pop("model")
+print('**op1 -> ', thisdict)
+
+# popitem() method removes the last inserted item (in versions before 3.7, a random item is removed instead):
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict.popitem()
+print('**op2 -> ', thisdict)
+
+# del keyword removes the item with the specified key name:
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+del thisdict["model"]
+print('**op3 -> ', thisdict)
+
+# clear() method empties the dictionary:
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+thisdict.clear()
+print('**op4 -> ', thisdict)
+
+###### OUTPUT
+**op1 ->  {'brand': 'Ford', 'year': 1964}
+**op2 ->  {'brand': 'Ford', 'model': 'Mustang'}
+**op3 ->  {'brand': 'Ford', 'year': 1964}
+**op4 ->  {}
+```
+
+## Loop Dictionaries
+- When looping through a dictionary, the return value are the keys of the dictionary, but there are methods to return the values as well
+
+```python
+# Print all key names in the dictionary
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+print('**op1 -> ')
+for x in thisdict:
+  print(x)
+
+# Print all values in the dictionary
+print('**op2 -> ')
+for x in thisdict:
+  print(thisdict[x])
+
+# use the values() method to return values of a dictionary:
+print('**op3 -> ')
+for x in thisdict.values():
+  print(x)
+
+# use the keys() method to return the keys of a dictionary:
+print('**op4 -> ')
+for x in thisdict.keys():
+  print(x)
+
+# Loop through both keys and values, by using the items() method
+print('**op5 -> ')
+for x, y in thisdict.items():
+  print(x, y)
+
+##### OUTPUT
+**op1 -> 
+brand
+model
+year
+**op2 -> 
+Ford
+Mustang
+1964
+**op3 -> 
+Ford
+Mustang
+1964
+**op4 -> 
+brand
+model
+year
+**op5 -> 
+brand Ford
+model Mustang
+year 1964
+```
+
+## Copy Dictionaries
+- You cannot copy a dictionary simply by typing `dict2 = dict1`, because: `dict2` will only be a reference to `dict1`, and changes made in `dict1` will automatically also be made in `dict2`.
+
+```python
+# using copy() method
+thisdict = {"brand": "Ford","model": "Mustang","year": 1964}
+mydict = thisdict.copy()
+print('**op1 -> ', mydict)
+
+# use the built-in function dict().
+mydict = dict(thisdict)
+print('**op1 -> ', mydict)
+
+###### OUTPUT
+**op1 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 1964}
+**op1 ->  {'brand': 'Ford', 'model': 'Mustang', 'year': 1964}
+```
+
+## Dictionary Methods
+<table class="ws-table-all notranslate">
+<tbody><tr>
+<th>Method</th>
+<th>Description</th>
+</tr>
+<tr><td><a href="ref_dictionary_clear.asp">clear()</a></td><td>Removes all the elements from the dictionary</td></tr>
+<tr><td><a href="ref_dictionary_copy.asp">copy()</a></td><td>Returns a copy of the dictionary</td></tr>
+<tr><td><a href="ref_dictionary_fromkeys.asp">fromkeys()</a></td><td>Returns a dictionary with the specified keys and value</td></tr>
+<tr><td><a href="ref_dictionary_get.asp">get()</a></td><td>Returns the value of the specified key</td></tr>
+<tr><td><a href="ref_dictionary_items.asp">items()</a></td><td>Returns a list containing a tuple for each key value pair</td></tr>
+<tr><td><a href="ref_dictionary_keys.asp">keys()</a></td><td>Returns a list containing the dictionary's keys</td></tr>
+<tr><td><a href="ref_dictionary_pop.asp">pop()</a></td><td>Removes the element with the specified key</td></tr>
+<tr><td><a href="ref_dictionary_popitem.asp">popitem()</a></td><td>Removes the last 
+  inserted key-value pair</td></tr>
+<tr><td><a href="ref_dictionary_setdefault.asp">setdefault()</a></td><td>Returns the value of the specified key. If the key does not exist: insert the key, with the specified value</td></tr>
+<tr><td><a href="ref_dictionary_update.asp">update()</a></td><td>Updates the dictionary with the specified key-value pairs</td></tr>
+<tr><td><a href="ref_dictionary_values.asp">values()</a></td><td>Returns a list of all the values in the dictionary</td></tr>
+</tbody></table>
+
+# Conditional Execution & Loops
+
+*(made notes for only important and new things)*
+
+```python
+# while else loop
+i = 1
+while i < 6:
+  print(i)
+  i += 1
+else:
+  print("i is no longer less than 6")
+
+#### OUTPUT
+1
+2
+3
+4
+5
+i is no longer less than 6
+```
+```python
+# for else loop
+# The else block will NOT be executed if the loop is stopped by a break statement.
+print('**op1 -> ')
+for x in range(6):
+  if x == 3: break
+  print(x)
+else:
+  print("Finally finished!")
+
+print('\n**op1 -> ')
+for x in range(6):
+  print(x)
+else:
+  print("Finally finished!")
+
+##### OUTPUT
+**op1 -> 
+0
+1
+2
+
+**op1 -> 
+0
+1
+2
+3
+4
+5
+Finally finished!
+```
+
+# Comprehensions
+- Comprehensions in Python provide us with a short and concise way to construct new sequences (such as lists, set, dictionary etc.) using sequences which have been already defined.
+- Python supports the following 4 types of comprehensions:
+    1. List Comprehensions
+    2. Dictionary Comprehensions
+    3. Set Comprehensions
+    4. Generator Comprehensions
+
+## List Comprehensions:
+
+- Syntax of different comprehensions
+  <br>
+  `new_list = [expression for variable in iterable]`<br>
+  `new_list = [expression for variable in iterable if condition == True]`<br>
+  `new_list = [expression if condition else expression for variable in iterable]`
+
+```python
+# way 1
+res = [num for num in range(8)]
+print('**op1 -> ', res)
+
+# way 2
+res = [num for num in range(8) if num%2==0]
+print('**op2 -> ', res)
+
+# way 3
+res = [num if num%2==0 else 'odd' for num in range(8)]
+print('**op3 -> ', res)
+
+# nested comprehension example
+matrix = [[j for j in range(5)] for i in range(3)]
+print('**op4 -> ', matrix)
+
+##### OUTPUT
+**op1 ->  [0, 1, 2, 3, 4, 5, 6, 7]
+**op2 ->  [0, 2, 4, 6]
+**op3 ->  [0, 'odd', 2, 'odd', 4, 'odd', 6, 'odd']
+**op4 ->  [[0, 1, 2, 3, 4], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4]]
+```
+
+- **Any** and **All** methods are useful in checking if every element in the list or Any of the elements in the list satisfy the conditions.
+
+```python
+# all method
+# check if all the elements in the list are even
+res = all(x % 2 == 0 for x in range(8))
+print('**op1 -> ', res)
+
+# any method
+# check if any element in the list is even.
+res = any(x % 2 == 0 for x in range(8))
+print('**op2 -> ', res)
+
+##### OUTPUT
+
+**op1 ->  False
+**op2 ->  True
+```
+
+## Dictionary Comprehensions
+- Syntax <br>
+  `output_dict = {key:value for (key, value) in iterable if (key, value satisfy this condition)}`
+
+```python
+# example 1
+input_list = [1,2,3,4,5,6,7]
+dict_using_comp = {var:var ** 3 for var in input_list if var % 2 != 0}
+print('**op1 -> ', dict_using_comp)
+
+# example 2
+state = ['Gujarat', 'Maharashtra', 'Rajasthan']
+capital = ['Gandhinagar', 'Mumbai', 'Jaipur']
+print(zip(state, capital))
+dict_using_comp = {key:value for (key, value) in zip(state, capital)}
+print('**op2 -> ', dict_using_comp)
+
+##### OUTPUT
+**op1 ->  {1: 1, 3: 27, 5: 125, 7: 343}
+<zip object at 0x000001A8702CB480>
+**op2 ->  {'Gujarat': 'Gandhinagar', 'Maharashtra': 'Mumbai', 'Rajasthan': 'Jaipur'}
+```
+
+## Set Comprehensions
+- Set comprehensions are pretty similar to list comprehensions. The only difference between them is that set comprehensions use curly brackets { }
+- Syntax <br>
+  `my_set = {<expression> for <item> in <iterable> if <condition>}`
+```python
+# example 1
+input_list = [1, 2, 3, 4, 4, 5, 6, 6, 6, 7, 7]
+set_using_comp = {var for var in input_list if var % 2 == 0}
+print('**op1 -> ', set_using_comp)
+
+##### OUTPUT
+**op1 ->  {2, 4, 6}
+```
+
+## Generator Comprehensions
+- Generator Comprehensions are very **similar to list comprehensions**. 
+- One difference between them is that generator comprehensions use **circular brackets** whereas list comprehensions use square brackets. 
+- The major difference between them is that generators **don’t allocate memory for the whole list**. Instead, they generate each value one by one which is why they are **memory efficient**.
+- it is usually generated from a function with `yield` keyword but in comprehention we don't need the yield keyword
+- Syntax <br>
+  `my_gen = (<expression> for <item> in <iterable> if <condition>)`
+
+```python
+# not using comprehension
+def even_generator(numbers):
+    for n in numbers:
+        if n % 2 == 0:
+            yield int(n/2)
+eg = even_generator(range(10))
+print('**op1 -> ', eg)
+print('**op2 -> ')
+print(next(eg))
+print(next(eg))
+print(next(eg))
+print(next(eg))
+print(next(eg)) # after this no more left, StopIteration error will come
+
+# using comprehension
+eg = (int(number/2) for number in range(10) if number % 2 == 0)
+print('**op3 -> ')
+print(next(eg))
+print(next(eg))
+print(next(eg))
+print(next(eg))
+print(next(eg)) # after this no more left, StopIteration error will come
+
+print('**op4 -> ') # another way to check op
+# can't reuse eg from previous line since we already printed all op values from it, so had to recreate the eg list
+eg = (int(number/2) for number in range(10) if number % 2 == 0)
+for var in eg:
+    print(var, end = ' ')
+
+###### OUTPUT
+**op1 ->  <generator object even_generator at 0x000001A870BF8660>
+**op2 -> 
+0
+1
+2
+3
+4
+**op3 -> 
+0
+1
+2
+3
+4
+**op4 -> 
+0 1 2 3 4 
+```
+
+# Functions
+- A function is a block of code which only runs when it is called
+- A **parameter** is the variable listed inside the parentheses in the function definition.
+- An **argument** is the value that is sent to the function when it is called.
+
+```python
+# Creating a Function
+def my_function():
+  print("Hello from a function")
+
+# Calling a Function
+print('\n**op1 -> ')
+my_function()
+
+# Number of Arguments
+print('\n**op2 -> ')
+def my_function(fname, lname):
+  print(fname + " " + lname)
+my_function("Emil", "Refsnes")
+
+# Arbitrary Arguments
+# If you do not know how many arguments that will be passed into your function, add a * before the parameter name
+print('\n**op3 -> ')
+def my_function(*kids):
+  print("The youngest child is " + kids[2])
+my_function("Emil", "Tobias", "Linus")
+
+# Keyword Arguments
+# You can also send arguments with the key = value syntax. order of the arguments does not matter.
+print('\n**op4 -> ')
+def my_function(child3, child2, child1):
+  print("The youngest child is " + child3)
+my_function(child1 = "Emil", child2 = "Tobias", child3 = "Linus")
+
+# Arbitrary Keyword Arguments, **kwargs
+# If you do not know how many keyword arguments that will be passed into your function, add two asterisk: ** before the parameter name
+print('\n**op5 -> ')
+def my_function(**kid):
+  print("His last name is " + kid["lname"])
+my_function(fname = "Tobias", lname = "Refsnes")
+
+# Default Parameter Value
+# If we call the function without argument, it uses the default value:
+print('\n**op6 -> ')
+def my_function(country = "Norway"):
+  print("I am from " + country)
+my_function("Sweden")
+my_function("India")
+my_function()
+
+###### OUTPUT
+**op1 -> 
+Hello from a function
+
+**op2 -> 
+Emil Refsnes
+
+**op3 -> 
+The youngest child is Linus
+
+**op4 -> 
+The youngest child is Linus
+
+**op5 -> 
+His last name is Refsnes
+
+**op6 -> 
+I am from Sweden
+I am from India
+I am from Norway
+```
+
+## Recursion
+- Recursion means a defined function can call itself
+- The developer should be very careful with recursion as it can be quite easy to slip into writing a function which never terminates, or one that uses excess amounts of memory or processor power. However, when written correctly recursion can be a very efficient and mathematically-elegant approach to programming.
+
+```python
+def tri_recursion(k):
+  if(k > 0):
+    result = k + tri_recursion(k - 1)
+    print(result)
+  else:
+    result = 0
+  return result
+
+print("\n\nRecursion Example Results")
+tri_recursion(6)
+
+##### OUTPUT
+Recursion Example Results
+1
+3
+6
+10
+15
+21
+```
 
 
 
