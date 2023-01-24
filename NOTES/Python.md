@@ -62,6 +62,9 @@
   - [Generator Comprehensions](#generator-comprehensions)
 - [Functions](#functions)
   - [Recursion](#recursion)
+- [Modules](#modules)
+- [Namespaces and Scope](#namespaces-and-scope)
+- [File handling](#file-handling)
 
 ---
 
@@ -2206,6 +2209,128 @@ Recursion Example Results
 15
 21
 ```
+
+- When dealing with recursive functions, each recursive call has its own execution context, so to maintain state during recursion you have to either:
+1) Thread the state through each recursive call so that the current state is part of the current call’s execution context
+2) Keep the state in global scope
+   
+```python
+## ----- way 1
+def sum_recursive(current_number, accumulated_sum):
+    # Base case
+    # Return the final state
+    if current_number == 11:
+        return accumulated_sum
+
+    # Recursive case
+    # Thread the state through the recursive call
+    else:
+        return sum_recursive(current_number + 1, accumulated_sum + current_number)
+
+## ----- way 2
+# Global mutable state
+current_number = 1
+accumulated_sum = 0
+
+
+def sum_recursive():
+    global current_number
+    global accumulated_sum
+    # Base case
+    if current_number == 11:
+        return accumulated_sum
+    # Recursive case
+    else:
+        accumulated_sum = accumulated_sum + current_number
+        current_number = current_number + 1
+        return sum_recursive()
+```
+
+# Modules
+- A Python module is a file containing Python **definitions and statements**. 
+- A module can define **functions, classes, and variables**. 
+- A module can also include **runnable code**. 
+- Grouping related code into a module makes the code **easier to understand and use**.
+
+```python
+# ----- Create a Module
+# Save this code in a file named mymodule.py
+def greeting(name):
+  print("Hello, " + name)
+
+# ------ Use a Module
+# Note: When using a function from a module, use the syntax: module_name.function_name.
+import mymodule
+mymodule.greeting("Jonathan")
+
+# ------ Variables in Module
+# Save this code in the file mymodule.py
+person1 = {
+  "name": "John",
+  "age": 36,
+  "country": "Norway"
+}
+
+# Import the module named mymodule, and access the person1 dictionary:
+import mymodule
+a = mymodule.person1["age"]
+print(a)
+
+# ------ Naming a Module
+# You can name the module file whatever you like, but it must have the file extension .py
+
+# ------ Re-naming a Module
+# Create an alias for mymodule called mx:
+import mymodule as mx
+a = mx.person1["age"]
+print(a)
+
+# ------ Built-in Modules
+# There are several built-in modules in Python, which you can import whenever you like.
+import platform
+x = platform.system()
+print(x)
+
+# ------- Using the dir() Function
+# There is a built-in function to list all the function names (or variable names) in a module. The dir() function:
+# Note: The dir() function can be used on all modules, also the ones you create yourself.
+import platform
+x = dir(platform)
+print(x)
+    
+# ------- Import From Module
+# You can choose to import only parts from a module, by using the from keyword.
+# Note: When importing using the from keyword, do not use the module name when referring to elements in the module. Example: person1["age"], not mymodule.person1["age"]
+from mymodule import person1
+print (person1["age"])
+```
+
+# Namespaces and Scope
+- A **namespace** determines which identifiers (e.g. variables, functions, classes) are available for use, and a **scope** defines where — in your written code — a namespace can be accessed.
+- For more info with examples and proper examples refer to this [doc](./Utils/Mastering_Python_Namespaces_and_Scopes.pdf)
+
+<br>
+
+# File handling
+- hello
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
