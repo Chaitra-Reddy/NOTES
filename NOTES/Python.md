@@ -65,6 +65,10 @@
 - [Modules](#modules)
 - [Namespaces and Scope](#namespaces-and-scope)
 - [File handling](#file-handling)
+  - [Read Files](#read-files)
+  - [Write/Create Files](#writecreate-files)
+  - [Delete File](#delete-file)
+- [OOPs bullet points](#oops-bullet-points)
 
 ---
 
@@ -2312,14 +2316,163 @@ print (person1["age"])
 <br>
 
 # File handling
-- hello
+- The open() function takes two parameters; *filename*, and *mode*
+- There are four different methods (modes) for opening a file:
+```
+  1) "r" - Read - Default value. Opens a file for reading, error if the file does not exist
+  2) "a" - Append - Opens a file for appending, creates the file if it does not exist
+  3) "w" - Write - Opens a file for writing, creates the file if it does not exist
+  4) "x" - Create - Creates the specified file, returns an error if the file exists
+```
+- In addition you can specify if the file should be handled as binary or text mode
+```
+  1) "t" - Text - Default value. Text mode
+  2) "b" - Binary - Binary mode (e.g. images)
+```
+
+## Read Files
+
+```python
+# open a file
+f = open("demofile.txt")
+
+# The code above is the same as
+f = open("demofile.txt", "rt")
+
+# Note: Make sure the file exists, or else you will get an error.
+
+# ------- demofile.txt ---------
+
+# Hello! Welcome to demofile.txt
+# This file is for testing purposes.
+# Good Luck!
+
+# ------------------------------
+
+# Open a File on the Server
+# The open() function returns a file object, which has a read() method for reading the content of the file:
+f = open("demofile.txt", "r")
+print(f.read()) # will print the file content
+
+# Read Only Parts of the File
+# By default the read() method returns the whole text, but you can also specify how many characters you want to return:
+f = open("demofile.txt", "r")
+print(f.read(5)) # --> Hello
+
+# Read Lines
+# Read one line of the file:
+f = open("demofile.txt", "r")
+print(f.readline()) # -> Hello! Welcome to demofile.txt
+
+# By calling readline() two times, you can read the two first lines:
+f = open("demofile.txt", "r")
+print(f.readline()) # -> Hello! Welcome to demofile.txt
+print(f.readline()) # -> This file is for testing purposes.
+
+# By looping through the lines of the file, you can read the whole file, line by line:
+f = open("demofile.txt", "r")
+for x in f:
+  print(x)
+
+# Close Files
+f = open("demofile.txt", "r")
+print(f.readline())
+f.close()
+
+# Note: You should always close your files, in some cases, due to buffering, changes made to a file may not show until you close the file.
+
+```
+
+## Write/Create Files
+- To write to an existing file, you must add a parameter to the open() function:
+```
+"a" - Append - will append to the end of the file
+"w" - Write - will overwrite any existing content
+```
+- To create a new file in Python, use the open() method, with one of the following parameters:
+
+```
+"x" - Create - will create a file, returns an error if the file exist
+"a" - Append - will create a file if the specified file does not exist
+"w" - Write - will create a file if the specified file does not exist
+```
+
+```python
+# Write to an Existing File
+# Open the file "demofile2.txt" and append content to the file:
+f = open("demofile2.txt", "a")
+f.write("Now the file has more content!")
+f.close()
+
+# Open the file "demofile3.txt" and overwrite the content:
+# Note: the "w" method will overwrite the entire file.
+f = open("demofile3.txt", "w")
+f.write("Woops! I have deleted the content!")
+f.close()
+
+# Create a file called "myfile.txt":
+f = open("myfile.txt", "x")
+
+# Create a new file if it does not exist:
+f = open("myfile.txt", "w")
+```
+
+## Delete File
+
+```python
+# To delete a file, you must import the OS module, and run its os.remove() function:
+import os
+os.remove("demofile.txt")
+
+# Check if File exist
+# To avoid getting an error, you might want to check if the file exists before you try to delete it:
+import os
+if os.path.exists("demofile.txt"):
+  os.remove("demofile.txt")
+else:
+  print("The file does not exist")
+
+# Delete Folder
+# To delete an entire folder, use the os.rmdir() method:
+# Note: You can only remove empty folders.
+import os
+os.rmdir("myfolder")
+```
+
+# OOPs bullet points
+- A **class** is a blueprint for the object. To create an object we require a model or plan or blueprint which is nothing but class.
+- An **object** is an instance of a class. It is a collection of attributes (variables) and methods. We use the object of a class to perform actions.
+- A **constructor** is a special method used to create and initialize an object of a class. This method is defined in the class.
+- In Python, Object creation is divided into two parts in **Object Creation** and **Object initialization**
+  - Internally, the `__new__` is the method that creates the object
+  - And, using the `__init__()` method we can implement constructor to initialize the object.
+- In Python, we have the following **three types of constructors** - *Default Constructor, Non-parametrized constructor, Parameterized constructor*
+- **Constructor overloading** is a concept of having more than one constructor with a different parameters list in such a way so that each constructor can perform different tasks. *Python does not support constructor overloading*. If we define multiple constructors then, the interpreter will considers only the last constructor and throws an error if the sequence of the arguments doesn’t match as per the last constructor.
+- **Constructor chaining** is the process of calling one constructor from another constructor. Using the `super()` method we can invoke the parent class constructor from a child class. Example : `super().__init__(engine, max_speed)`
+- The `__init__()` is **required to return None**. We can not return something else. If we try to return a non-None value from the `__init__()` method, it will raise TypeError.
+- **Destructor** gets called in the following two cases : When an object goes out of scope or the reference counter of the object reaches 0.
+- The magic method `__del__()` is used as the destructor in Python. The `__del__()` method will be implicitly invoked when all references to the object have been deleted, i.e., is when an object is eligible for the garbage collector. This method is also called a **finalizer** or (improperly) a destructor.
+- Note: The __del__() method arguments are optional. We can define a destructor with any number of arguments.
+- The **destructor will not invoke** when we delete object reference. It will only invoke when all references to the objects get deleted.
+- In Python, if any **exception occurs in the init method** while initializing the object, the method `del` gets called. But actually, an object is not created successfully, and resources are not allocated to it even though the object was never initialized correctly, the del method will try to empty all the resources and, in turn, may lead to another exception.
+- In Python, **Method Resolution Order(MRO)** is the order by which Python looks for a method or attribute. This order is also called the **Linearization** of a class. First, it searches in the current parent class if not available, then searches in the parents class specified while inheriting (that is **left to right**). We can get the MRO of a class by using either the `mro` attribute or the `mro()` method.
+- Instance variables are not shared by objects. Every object has its **own copy** of the instance attribute. In Python, to work with an instance variable and method, we use the `self` keyword. We use a constructor to define and initialize the instance variables. Use the `__dict__` function of an object to get all instance variables along with their value.
+- If we use instance variables inside a method, such methods are called **instance methods**. It must have a self parameter to refer to the current object. By Using `self.__class__` attribute we can access the class attributes and change the class state. Therefore **instance method gives us control of changing the object as well as the class state**. Instance variables can be created in any method not just init method. We can use `MethodType()` function to add a method at runtime to that particular instance. Example:
+```python
+# create new method
+def welcome(self):
+    print("Hello", self.name, "Welcome to Class IX")
 
 
+# create object
+s1 = Student("Jessa", 15)
 
+# Add instance method to object
+s1.welcome = types.MethodType(welcome, s1)
 
-
-
-
+# call newly added method
+s1.welcome()
+```
 
 
 
