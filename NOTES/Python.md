@@ -69,6 +69,33 @@
   - [Write/Create Files](#writecreate-files)
   - [Delete File](#delete-file)
 - [OOPs bullet points](#oops-bullet-points)
+- [Iterators](#iterators)
+  - [Iterating through an iterator](#iterating-through-an-iterator)
+  - [Itearting through an iterator using a for loop](#itearting-through-an-iterator-using-a-for-loop)
+  - [Building custom iterators](#building-custom-iterators)
+  - [Infinite Iterators](#infinite-iterators)
+- [Generators](#generators)
+  - [Create Python Generator](#create-python-generator)
+  - [Generator Expression](#generator-expression)
+  - [Use of Python Generators](#use-of-python-generators)
+- [Closures](#closures)
+  - [When to use closures?](#when-to-use-closures)
+  - [Python closures vs classes](#python-closures-vs-classes)
+- [Decorators](#decorators)
+  - [@ Symbol With Decorator](#-symbol-with-decorator)
+  - [Decorating Functions with Parameters](#decorating-functions-with-parameters)
+  - [Chaining Decorators in Python](#chaining-decorators-in-python)
+- [Property](#property)
+  - [Class Without Getters and Setters](#class-without-getters-and-setters)
+  - [Using Getters and Setters](#using-getters-and-setters)
+  - [The property Class](#the-property-class)
+  - [The @property Decorator](#the-property-decorator)
+- [Regular Expressions](#regular-expressions)
+- [Lambda/Anonymous Function](#lambdaanonymous-function)
+  - [Lambda Function Declaration without arguments](#lambda-function-declaration-without-arguments)
+  - [Lambda Function with an Argument](#lambda-function-with-an-argument)
+  - [How to use the lambda function with filter()?](#how-to-use-the-lambda-function-with-filter)
+  - [How to use the lambda function with map()?](#how-to-use-the-lambda-function-with-map)
 
 ---
 
@@ -2440,6 +2467,7 @@ os.rmdir("myfolder")
 ```
 
 # OOPs bullet points
+- In detail explaination of oops is in this location -> ./Utils/OOPs
 - A **class** is a blueprint for the object. To create an object we require a model or plan or blueprint which is nothing but class.
 - An **object** is an instance of a class. It is a collection of attributes (variables) and methods. We use the object of a class to perform actions.
 - A **constructor** is a special method used to create and initialize an object of a class. This method is defined in the class.
@@ -2463,7 +2491,6 @@ os.rmdir("myfolder")
 def welcome(self):
     print("Hello", self.name, "Welcome to Class IX")
 
-
 # create object
 s1 = Student("Jessa", 15)
 
@@ -2473,13 +2500,920 @@ s1.welcome = types.MethodType(welcome, s1)
 # call newly added method
 s1.welcome()
 ```
+- If the value of a variable is not varied from object to object, such types of variables are called **class variables** or **static variables**. A class variable is declared inside of class, but outside of any instance method or `__init__()` method. It is **best practice to use a class name to change the value of a class variable**. Because if we try to change the class variable’s value by using an object, a new instance variable is created for that particular object, which shadows the class variables.
+- **Class methods** are methods that are called on the class itself, not on a specific object instance. Therefore, it belongs to a class level, and all class instances share a class method.
+
+# Iterators
+
+- **Iterators** are methods that iterate collections like lists, tuples etc.
+- Using iterator method, we can loop through an object and return its elements
+- Technically, **iterator object** should implement two special methods, `__iter()__` and `__next()__`, collectively known as **iterator protocol**
+
+## Iterating through an iterator
+
+```python
+# define a list
+my_list = [4, 7, 0]
+
+# create an iterator from the list
+iterator = iter(my_list)
+
+# get the first element of the iterator
+print(next(iterator))  # prints 4
+
+# get the second element of the iterator
+print(next(iterator))  # prints 7
+
+# get the third element of the iterator
+print(next(iterator))  # prints 0
+
+# get fourth element
+print(next(iterator))  # throws "StopIteration" Error
+
+###### OUTPUT
+4
+7
+0
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Input In [2], in <module>
+     13 # get the third element of the iterator
+     14 print(next(iterator))  # prints 0
+---> 15 print(next(iterator))
+
+StopIteration: 
+```
+
+## Itearting through an iterator using a for loop
+
+```python
+# define a list
+my_list = [4, 7, 0]
+
+# create an iterator from the list
+iterator = iter(my_list)
+
+for element in iterator:
+    print(element)
+
+####### OUTPUT
+4
+7
+0
+```
+
+## Building custom iterators
+
+- For building custom iterators, we just have to implement `__iter()__` and `__next()__` methods.
+- `__iter__()` returns the iterator object itself. If required, some initialization can be performed.
+- `__next__()` must return the next item in the sequence. On reaching the end, and in subsequent calls, it must raise `StopIteration`.
+- Let's see an example that will give us the next power of 2 in each iteration. Power exponent starts from zero up to a user set number,
+```python
+class PowTwo:
+    '''class to get powers of two upto user set number'''
+    def __init__(self, max=0):
+        self.max = max
+        
+    def __iter__(self):
+        self.n = 0
+        return self
+    
+    def __next__(self):
+        if self.n <= self.max:
+            result = 2 ** self.n
+            self.n += 1
+            return result
+        else:
+            raise StopIteration
+            
+obj = PowTwo(2)
+
+i = iter(obj)
+
+print(next(i))
+print(next(i))
+print(next(i))
+print(next(i))
+
+######## OUTPUT
+1
+2
+4
+---------------------------------------------------------------------------
+StopIteration                             Traceback (most recent call last)
+Input In [11], in <module>
+     23 print(next(i))
+     24 print(next(i))
+---> 25 print(next(i))
+
+Input In [11], in PowTwo.__next__(self)
+     14     return result
+     15 else:
+---> 16     raise StopIteration
+
+StopIteration: 
+```
+
+## Infinite Iterators
+
+- An infinite iterator will continue to produce elements indefinitely.
+- Here is an example of how to create an infinite iterator in Python using the `count()` function from the `itertools` module,
+
+```python
+from itertools import count
+
+# create an infinite iterator that starts at 1 and increments by 1 each time
+infinite_iterator = count(1)
+
+# print the first 5 elements of the infinite iterator
+for i in range(5):
+    print(next(infinite_iterator))
+
+####### OUTPUT
+1
+2
+3
+4
+5
+```
+
+# Generators
+
+- A generator is a function that returns an iterator that produces a sequence of values when iterated over.
+
+## Create Python Generator
+
+- Like any other normal function, we can define a generator function using the `def` keyword, but instead of the `return` statement we use the `yield` statement.
+
+```python
+def generator_name(arg):
+    # statements
+    yield something
+```
+
+- Here, the `yield` keyword is used to produce a value from the generator.
+- When the generator function is called, it does not execute the function body immediately. Instead, it returns a generator object that can be iterated over to produce the values.
+- Example,
+```python
+def my_generator(n):
+
+    # initialize counter
+    value = 0
+
+    # loop until counter is less than n
+    while value < n:
+
+        # produce the current value of the counter
+        yield value
+
+        # increment the counter
+        value += 1
+
+# iterate over the generator object produced by my_generator
+for value in my_generator(3):
+
+    # print each value produced by generator
+    print(value)
+
+###### OUTPUT
+0
+1
+2
+```
+
+- In the above example, the `my_generator()` generator function takes an integer n as an argument and produces a sequence of numbers from 0 to n-1.
+- The yield keyword is used to produce a value from the generator and pause the generator function's execution until the next value is requested.
+- We can also create a generator object from the generator function by calling the function like we would any other function as,
+
+```python
+generator = my_range(3)
+print(next(generator))  # 0
+print(next(generator))  # 1
+print(next(generator))  # 2
+```
+
+## Generator Expression
+
+- A generator expression is a concise way to create a generator object.
+- Generator expression syntax -> `(expression for item in iterable)`
+- Here, `expression` is a value that will be returned for each item in the `iterable`.
+- Example,
+```python
+# create the generator object
+squares_generator = (i * i for i in range(5))
+
+# iterate over the generator and print the values
+for i in squares_generator:
+    print(i)
+
+###### OUTPUT
+0
+1
+4
+9
+16
+```
+
+## Use of Python Generators
+
+1) **Easy to Implement** - Generators can be implemented in a clear and concise way as compared to their iterator class counterpart. Lets implement the power of 2 in generator
+```python
+def PowTwoGen(max=0):
+    n = 0
+    while n < max:
+        yield 2 ** n
+        n += 1
+```
+2) **Memory Efficient** - A normal function to return a sequence will create the entire sequence in memory before returning the result. This is an overkill, if the number of items in the sequence is very large. Generator implementation of such sequences is memory friendly and is preferred since it only produces one item at a time.
+3) **Represent Infinite Stream** - Generators are excellent mediums to represent an infinite stream of data. Infinite streams cannot be stored in memory, and since generators produce only one item at a time, they can represent an infinite stream of data.
+4) **Pipelining Generators** - Multiple generators can be used to pipeline a series of operations. Example :Suppose we have a generator that produces the numbers in the Fibonacci series. And we have another generator for squaring numbers.If we want to find out the sum of squares of numbers in the Fibonacci series, we can do it in the following way by pipelining the output of generator functions together.
+```python
+def fibonacci_numbers(nums):
+    x, y = 0, 1
+    for _ in range(nums):
+        x, y = y, x+y
+        yield x
+
+def square(nums):
+    for num in nums:
+        yield num**2
+
+print(sum(square(fibonacci_numbers(10))))
+
+# Output: 4895
+```
+
+# Closures
+
+- Python closure is a nested function that allows us to access variables of the outer function even after the outer function is closed.
+- A closure is a nested function which has access to a free variable from an enclosing function that has finished its execution. Three characteristics of a Python closure are: it is a nested function, it has access to a free variable in outer scope, it is returned from the enclosing function.
+- A **free variable** is a variable that is not bound in the local scope. In order for closures to work with immutable variables such as numbers and strings, we have to use the **nonlocal** keyword. The `nonlocal` keyword allows us to modify a variable with immutable type in the outer function scope.
+- In the below example, we have created a function named `greet()` that returns a nested anonymous function. The returned function is now assigned to the `message` variable. At this point, the execution of the outer function is completed, so the `name` variable should be destroyed. However, when we call the anonymous function using `print(message())` we are able to access the `name` variable of the outer function. It's possible because the nested function now acts as a closure that closes the outer scope variable within its scope even after the outer function is executed.
+
+```python
+def greet():
+    # variable defined outside the inner function
+    name = "John"
+    
+    # return a nested anonymous function
+    return lambda: "Hi " + name
+
+# call the outer function
+message = greet()
+
+# call the inner function
+print(message())
+
+####### OUTPUT
+Hi John
+```
+
+- Another example, here we can access the `num` variable of `calculate()` even after completing the outer function.
+
+```python
+def calculate():
+    num = 1
+    def inner_func():
+        nonlocal num
+        num += 2
+        return num
+    return inner_func
+
+# call the outer function
+odd = calculate()
+
+# call the inner function
+print(odd())
+print(odd())
+print(odd())
+
+# call the outer function again
+odd2 = calculate()
+print(odd2())
+
+##### OUTPUT
+3
+5
+7
+3
+```
+
+## When to use closures?
+- Closures can be used to avoid global values and provide data hiding, and can be an elegant solution for simple cases with one or few methods.
+- For larger cases with multiple attributes and methods, a class implementation may be more appropriate.
+
+```python
+def make_multiplier_of(n):
+    def multiplier(x):
+        return x * n
+    return multiplier
 
 
+# Multiplier of 3
+times3 = make_multiplier_of(3)
+
+# Multiplier of 5
+times5 = make_multiplier_of(5)
+
+# Output: 27
+print(times3(9))
+
+# Output: 15
+print(times5(3))
+
+# Output: 30
+print(times5(times3(2)))
+```
+
+- NOTE : it is good to point out that the values that get enclosed in the closure function can be found out. All function objects have a `__closure__` attribute that returns a tuple of cell objects if it is a closure function. Referring to the example above, we know times3 and times5 are closure functions.
+
+## Python closures vs classes
+
+- Python closures can be an alternate solution to small classes.
+
+```python
+class Summer():
+
+    def __init__(self):
+        self.data = []
+
+    def __call__(self, val):
+
+        self.data.append(val)
+        _sum = sum(self.data)
+
+        return _sum
+
+summer = Summer()
+
+s = summer(1)
+print(s)
+
+s = summer(2)
+print(s)
+
+s = summer(3)
+print(s)
+
+s = summer(4)
+print(s)
+
+####### OUTPUT
+1
+3
+6
+10
+```
+
+```python
+def make_summer():
+
+    data = []
+
+    def summer(val):
+        # Because the data is a list which is mutable, we do not have to use the nonlocal keyword
+        data.append(val)
+        _sum = sum(data)
+
+        return _sum
+
+    return summer
+
+summer = make_summer()
+
+s = summer(1)
+print(s)
+
+s = summer(2)
+print(s)
+
+s = summer(3)
+print(s)
+
+s = summer(4)
+print(s)
+
+###### OUTPUT
+1
+3
+6
+10
+```
+
+# Decorators
+- A decorator is a design pattern that allows you to modify the functionality of a function by wrapping it in another function.
+- The outer function is called the decorator, which takes the original function as an argument and returns a modified version of it.
+- Some prerequisites needed
+```python
+##### NESTED FUNCTION
+def outer(x):
+    def inner(y):
+        return x + y
+    return inner
+
+add_five = outer(5)
+result = add_five(6)
+print(result)  # prints 11
+
+# Output: 11
+
+###### PASS FUNCTION AS ARGUMENT
+def add(x, y):
+    return x + y
+
+def calculate(func, x, y):
+    return func(x, y)
+
+result = calculate(add, 4, 6)
+print(result)  # prints 10
+
+##### RETURN A FUNCTION AS A VALUE
+def greeting(name):
+    def hello():
+        return "Hello, " + name + "!"
+    return hello
+
+greet = greeting("Atlantis")
+print(greet())  # prints "Hello, Atlantis!"
+
+# Output: Hello, Atlantis!
+```
+
+- Any object which implements the special __call__() method is termed callable. So, in the most basic sense, a decorator is a callable that returns a callable.
+- Simple example,
+
+```python
+def make_pretty(func):
+    # define the inner function 
+    def inner():
+        # add some additional behavior to decorated function
+        print("I got decorated")
+
+        # call original function
+        func()
+    # return the inner function
+    return inner
+
+# define ordinary function
+def ordinary():
+    print("I am ordinary")
+    
+# decorate the ordinary function
+decorated_func = make_pretty(ordinary)
+
+# call the decorated function
+decorated_func()
+
+###### OUTPUT
+I got decorated
+I am ordinary
+```
+
+## @ Symbol With Decorator
+- Instead of assigning the function call to a variable, Python provides a much more elegant way to achieve this functionality using the `@` symbol
+- Example : Here, the `ordinary()` function is decorated with the `make_pretty()` decorator using the `@make_pretty` syntax, which is equivalent to calling `ordinary = make_pretty(ordinary)`.
+
+```python
+def make_pretty(func):
+
+    def inner():
+        print("I got decorated")
+        func()
+    return inner
+
+@make_pretty
+def ordinary():
+    print("I am ordinary")
+
+ordinary()  
+
+###### OUTPUT
+I got decorated
+I am ordinary
+```
+
+## Decorating Functions with Parameters
+- The above decorator was simple and it only worked with functions that did not have any parameters. What if we had functions that took in parameters?
+- Example : 
+
+```python
+def smart_divide(func):
+    def inner(a, b):
+        print("I am going to divide", a, "and", b)
+        if b == 0:
+            print("Whoops! cannot divide")
+            return
+
+        return func(a, b)
+    return inner
+
+@smart_divide
+def divide(a, b):
+    print(a/b)
+
+divide(2,5)
+
+divide(2,0)
+
+####### OUTPUT
+I am going to divide 2 and 5
+0.4
+I am going to divide 2 and 0
+Whoops! cannot divide
+```
+
+## Chaining Decorators in Python
+- To chain decorators in Python, we can apply multiple decorators to a single function by placing them one after the other, with the most inner decorator being applied first.
+
+```python
+def one(func):
+    def inner():
+        print('******************')
+        func()
+        print('******************')
+    return inner
+        
+def two(func):
+    def inner():
+        print('$$$$$$$$$$$$$$$$$$')
+        func()
+        print('$$$$$$$$$$$$$$$$$$')
+    return inner
+
+@one
+@two
+def original():
+    print('\nHello\n')
+
+# the above four lines are equivalent to
+# original = one(two(original))
+    
+original()
+
+####### OUTPUT
+******************
+$$$$$$$$$$$$$$$$$$
+
+Hello
+
+$$$$$$$$$$$$$$$$$$
+******************
+```
+
+# Property
+- Python programming provides us with a built-in `@property` decorator which makes usage of getter and setters much easier in Object-Oriented Programming.
+
+## Class Without Getters and Setters
+- Here, the extra decimal places when converting into Fahrenheit is due to the Floating Point Arithmetic Error.
+- So, whenever we assign or retrieve any object attribute like temperature as shown below, Python searches it in the object's built-in `__dict__` dictionary attribute as
+```
+print(human.__dict__) 
+# Output: {'temperature': 37}
+```
+- Therefore, `human.temperature` internally becomes `human.__dict__['temperature']`.
+```python
+# Basic method of setting and getting attributes in Python
+class Celsius:
+    def __init__(self, temperature=0):
+        self.temperature = temperature
+
+    def to_fahrenheit(self):
+        return (self.temperature * 1.8) + 32
 
 
+# Create a new object
+human = Celsius()
+
+# Set the temperature
+human.temperature = 37
+
+# Get the temperature attribute
+print(human.temperature)
+
+# Get the to_fahrenheit method
+print(human.to_fahrenheit())
+
+##### OUTPUT
+37
+98.60000000000001
+```
+
+## Using Getters and Setters
+- Suppose we want to extend the usability of the `Celsius` class defined above. We know that the temperature of any object cannot reach below -273.15 degrees Celsius. Lets implement that using getters and setters
+
+```python
+# Making Getters and Setter methods
+class Celsius:
+    def __init__(self, temperature=0):
+        self.set_temperature(temperature)
+
+    def to_fahrenheit(self):
+        return (self.get_temperature() * 1.8) + 32
+
+    # getter method
+    def get_temperature(self):
+        return self._temperature
+
+    # setter method
+    def set_temperature(self, value):
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible.")
+        self._temperature = value
 
 
+# Create a new object, set_temperature() internally called by __init__
+human = Celsius(37)
 
+# Get the temperature attribute via a getter
+print(human.get_temperature())
+
+# Get the to_fahrenheit method, get_temperature() called by the method itself
+print(human.to_fahrenheit())
+
+# new constraint implementation
+human.set_temperature(-300)
+
+# Get the to_fahreheit method
+print(human.to_fahrenheit())
+
+###### OUTPUT
+37
+98.60000000000001
+Traceback (most recent call last):
+  File "<string>", line 30, in <module>
+  File "<string>", line 16, in set_temperature
+ValueError: Temperature below -273.15 is not possible.
+```
+
+- However, the **bigger problem** with the above update is that all the programs that implemented our previous class have to modify their code from `obj.temperature` to `obj.get_temperature()` and all expressions like `obj.temperature = val` to `obj.set_temperature(val)`. Which can cause problems while dealing with hundreds of thousands of lines of codes. **This is where `@property` comes to rescue**.
+
+## The property Class
+- A pythonic way to deal with the above problem is to use the `property` class.
+- `temperature = property(get_temperature, set_temperature)` Simply put, property attaches some code (`get_temperature` and `set_temperature`) to the member attribute accesses (`temperature`).
+
+```python
+# using property class
+class Celsius:
+    def __init__(self, temperature=0):
+        self.temperature = temperature
+
+    def to_fahrenheit(self):
+        return (self.temperature * 1.8) + 32
+
+    # getter
+    def get_temperature(self):
+        print("Getting value...")
+        return self._temperature
+
+    # setter
+    def set_temperature(self, value):
+        print("Setting value...")
+        if value < -273.15:
+            raise ValueError("Temperature below -273.15 is not possible")
+        self._temperature = value
+
+    # creating a property object
+    temperature = property(get_temperature, set_temperature)
+
+
+human = Celsius(37)
+print('****')
+print(human.temperature)
+print('****')
+print(human.to_fahrenheit())
+print('****')
+human.temperature = -300
+
+###### OUTPUT
+Setting value...
+****
+Getting value...
+37
+****
+Getting value...
+98.60000000000001
+****
+Setting value...
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Input In [40], in <module>
+     29 print(human.to_fahrenheit())
+     30 print('****')
+---> 31 human.temperature = -300
+
+Input In [40], in Celsius.set_temperature(self, value)
+     16 print("Setting value...")
+     17 if value < -273.15:
+---> 18     raise ValueError("Temperature below -273.15 is not possible")
+     19 self._temperature = value
+
+ValueError: Temperature below -273.15 is not possible
+```
+
+- As we can see, any code that retrieves the value of temperature will automatically call `get_temperature()` instead of a dictionary (`__dict__`) look-up.
+- Similarly, any code that assigns a value to temperature will automatically call `set_temperature()`.
+- **By using `property`, we can see that no modification is required in the implementation of the value constraint. Thus, our implementation is backward compatible.**
+- NOTE: The actual temperature value is stored in the private `_temperature` variable. The `temperature` attribute is a property object which provides an interface to this private variable.
+
+## The @property Decorator
+- In Python, `property()` is a built-in function that creates and returns a property object. The syntax of this function is: `property(fget=None, fset=None, fdel=None, doc=None)`
+- Here,<br>
+`fget` is function to get value of the attribute<br>
+`fset` is function to set value of the attribute<br>
+`fdel` is function to delete the attribute<br>
+`doc` is a string (like a comment)<br>
+- As seen from the implementation, these function arguments are optional.
+- This line:<br>
+```temperature = property(get_temperature,set_temperature)```
+- Can be broken down as:
+```
+# make empty property
+temperature = property()
+
+# assign fget
+temperature = temperature.getter(get_temperature)
+
+# assign fset
+temperature = temperature.setter(set_temperature)
+```
+
+- We can even not define the names get_temperature and set_temperature as they are unnecessary and pollute the class namespace.
+- For this, we reuse the temperature name while defining our getter and setter functions. Let's look at how to implement this as a decorator:
+
+```python
+# Using @property decorator
+class Celsius:
+    def __init__(self, temperature=0):
+        self.temperature = temperature
+
+    def to_fahrenheit(self):
+        return (self.temperature * 1.8) + 32
+
+    @property
+    def temperature(self):
+        print("Getting value...")
+        return self._temperature
+
+    @temperature.setter
+    def temperature(self, value):
+        print("Setting value...")
+        if value < -273.15:
+            raise ValueError("Temperature below -273 is not possible")
+        self._temperature = value
+
+
+# create an object
+human = Celsius(37)
+print('****')
+print(human.temperature)
+print('****')
+print(human.to_fahrenheit())
+print('****')
+coldest_thing = Celsius(-300)
+
+###### OUTPUT
+Setting value...
+****
+Getting value...
+37
+****
+Getting value...
+98.60000000000001
+****
+Setting value...
+---------------------------------------------------------------------------
+ValueError                                Traceback (most recent call last)
+Input In [40], in <module>
+     29 print(human.to_fahrenheit())
+     30 print('****')
+---> 31 human.temperature = -300
+
+Input In [40], in Celsius.set_temperature(self, value)
+     16 print("Setting value...")
+     17 if value < -273.15:
+---> 18     raise ValueError("Temperature below -273.15 is not possible")
+     19 self._temperature = value
+
+ValueError: Temperature below -273.15 is not possible
+```
+
+# Regular Expressions
+- A Regular Expression (RegEx) is a sequence of characters that defines a search pattern.
+- For example, `^a...s$` -> This code defines a RegEx pattern. The pattern is: any five letter string starting with `a` and ending with `s`.
+
+<table border="0" cellpadding="1" cellspacing="1" summary="RegEx Match">
+	<thead>
+		<tr>
+			<th scope="col">Expression</th>
+			<th scope="col">String</th>
+			<th scope="col">Matched?</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td rowspan="5"><code>^a...s$</code></td>
+			<td><code>abs</code></td>
+			<td>No match</td>
+		</tr>
+		<tr>
+			<td><code>alias</code></td>
+			<td>Match</td>
+		</tr>
+		<tr>
+			<td><code>abyss</code></td>
+			<td>Match</td>
+		</tr>
+		<tr>
+			<td><code>Alias</code></td>
+			<td>No match</td>
+		</tr>
+		<tr>
+			<td><code>An abacus</code></td>
+			<td>No match</td>
+		</tr>
+	</tbody>
+</table>
+
+- Python has a module named `re` to work with RegEx. Here's an example:
+  
+```python
+import re
+
+pattern = '^a...s$'
+test_string = 'abyss'
+# returns a match object if the search is successful. If not, it returns None
+result = re.match(pattern, test_string)
+
+if result:
+  print("Search successful.")
+else:
+  print("Search unsuccessful.")
+
+###### OUTPUT
+Search successful.
+```
+
+**For more info refer [here](./Utils/RegEx.html)**
+
+# Lambda/Anonymous Function
+- In Python, a lambda function is a special type of function without the function name. 
+- Example, `lambda : print('Hello World')`
+
+## Lambda Function Declaration without arguments
+- We use the `lambda` keyword instead of `def` to create a lambda function. Here's the syntax to declare the lambda function: `lambda argument(s) : expression`
+- Here, `argument(s)` - any value passed to the lambda function, `expression` - expression is executed and returned
+- Example,
+```python
+greet = lambda : print('Hello World')
+greet()
+
+##### OUTPUT
+Hello World
+```
+
+## Lambda Function with an Argument
+
+```python
+# lambda that accepts one argument
+greet_user = lambda name : print('Hey there,', name)
+
+# lambda call
+greet_user('Delilah')
+
+####### OUTPUT
+Hey there, Delilah
+```
+
+## How to use the lambda function with filter()?
+- The filter() function in Python takes in a function and an iterable (lists, tuples, and strings) as arguments.
+- The function is called with all the items in the list and a new list is returned which contains items for which the function evaluates to True.
+- Let's see an example,
+```python
+# Program to filter out only the even items from a list
+my_list = [1, 5, 4, 6, 8, 11, 3, 12]
+
+new_list = list(filter(lambda x: (x%2 == 0) , my_list))
+
+print(new_list)
+
+# Output: [4, 6, 8, 12]
+```
+
+## How to use the lambda function with map()?
+- The map() function in Python takes in a function and an iterable (lists, tuples, and strings) as arguments.
+- The function is called with all the items in the list and a new list is returned which contains items returned by that function for each item.
+- Let's see an example,
+```python
+# Program to double each item in a list using map()
+
+my_list = [1, 5, 4, 6, 8, 11, 3, 12]
+
+new_list = list(map(lambda x: x * 2 , my_list))
+
+print(new_list)
+
+# Output: [2, 10, 8, 12, 16, 22, 6, 24]
+```
 
 
 
