@@ -1,3 +1,15 @@
+- [What is a REST API?](#what-is-a-rest-api)
+- [REST design principles](#rest-design-principles)
+- [What are the benefits of RESTful APIs?](#what-are-the-benefits-of-restful-apis)
+- [How do RESTful APIs work?](#how-do-restful-apis-work)
+- [What components does the RESTful API client request contain?](#what-components-does-the-restful-api-client-request-contain)
+  - [Unique resource identifier](#unique-resource-identifier)
+  - [Method](#method)
+  - [HTTP headers](#http-headers)
+- [What are RESTful API authentication methods?](#what-are-restful-api-authentication-methods)
+- [HTTP Status Codes](#http-status-codes)
+
+
 # What is a REST API?
 - An **API**, or *application programming interface*, is a set of rules that define how applications or devices can connect to and communicate with each other. 
 - A **REST API** is an API that conforms to the design principles of the **REST**, or **representational state transfer** architectural style. For this reason, REST APIs are sometimes referred to RESTful APIs.
