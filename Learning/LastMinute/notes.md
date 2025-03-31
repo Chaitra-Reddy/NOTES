@@ -145,3 +145,47 @@ Command used for listing files and directories. Use **man ls** command to get do
 --color    # colors the output to distinguish file types
 ```
 
+# Requests Library
+Used to send HTTP requests to web serversd and receive their responses
+## HTTP Methods
+- GET: Retrieve data from server
+- POST: Send data to a server to create or update a resource
+- PUT: Replace an existing resource with new data
+- DELETE: Remove a resource from a server
+- PATCH: Apply partial modifications to a resource
+- HEAD: Retrieve only the headers of a response
+- OPTIONS: Get the communication options for a target resource
+
+Basic example,
+```
+import requests
+resp = requests.get("http://www.example.com")
+if resp.status_code == 200:
+    print("yayy")
+else:
+    print("Ou NOuu")
+```
+
+Request data,
+- **url** >> str
+- **params** >> dict >> query string parameters to add to URL
+- **data** >> dict >> request body
+- **json** >> dict >> request body
+- **headers** >> dict >> custom headers
+- **timeout** >> int >> no. of secs to wait before giving up
+- **verify** >> bool >> to disable/enable SSL verification
+- **cookies** >> dict or CookieJar >> send cookies with request
+- **auth** >> tuple >> a tuple of username and password
+- **allow_redirects** >> bool >> whether requests should follow redirects
+- **proxies** >> dict >> specify proxies for the request
+- **stream** >> bool >> when true the resp content is downloded immediately allowing you to stream large responses
+- **cert** >> str or tuple >> specify client side cert as single file
+
+Response data,
+- **status_code** >> The HTTP status code
+- **text** >> The response content as a string
+- **content** >> The response content as bytes
+- **json()** >> Parse response as json
+- **headers** >> Dictionary of response headers
+- **cookies** >> A *RequestCookieJar* of cookies sent back from the server
+- **raise_for_status()** >> Raises an HTTPError for bad responses
