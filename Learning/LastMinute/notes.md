@@ -1,4 +1,99 @@
 # Networking concepts
+- [OSI Layers](#osi-layers)
+- [What happens layer wise when I google "cat facts" ?](#what-happens-layer-wise-when-i-google-cat-facts-)
+  - [Application Layer (Your Browser):](#application-layer-your-browser)
+  - [Presentation Layer:](#presentation-layer)
+  - [Session Layer:](#session-layer)
+  - [Transport Layer:](#transport-layer)
+  - [Network Layer:](#network-layer)
+  - [Data Link Layer:](#data-link-layer)
+  - [Physical Layer:](#physical-layer)
+- [TCP 3-way handshake](#tcp-3-way-handshake)
+    - [Step 1 >> SYN >> client to server](#step-1--syn--client-to-server)
+    - [Step 2 >> SYN-ACK >> server to client](#step-2--syn-ack--server-to-client)
+    - [Step 3 >> ACK >> client to server](#step-3--ack--client-to-server)
+- [TCP 4-way handshake](#tcp-4-way-handshake)
+- [What happens when I search something on Google?](#what-happens-when-i-search-something-on-google)
+  - [1) DNS Resolution](#1-dns-resolution)
+  - [2) TCP/IP Connection](#2-tcpip-connection)
+  - [3) HTTP/HTTPS Request](#3-httphttps-request)
+  - [4) Load Balancing](#4-load-balancing)
+  - [5) Google's data centers](#5-googles-data-centers)
+  - [6) DB query and Response](#6-db-query-and-response)
+  - [7) Packet Transmission](#7-packet-transmission)
+  - [8) TCP Reassembly and Display](#8-tcp-reassembly-and-display)
+- [OSI Model](#osi-model)
+  - [Physical Layer (Layer 1):](#physical-layer-layer-1)
+  - [Data Link Layer (Layer 2):](#data-link-layer-layer-2)
+  - [Network Layer (Layer 3):](#network-layer-layer-3)
+  - [Transport Layer (Layer 4):](#transport-layer-layer-4)
+  - [Session Layer (Layer 5):](#session-layer-layer-5)
+  - [Presentation Layer (Layer 6):](#presentation-layer-layer-6)
+  - [Application Layer (Layer 7):](#application-layer-layer-7)
+- [HTTP](#http)
+- [TLS](#tls)
+- [TLS Handshake](#tls-handshake)
+- [free](#free)
+- [ls](#ls)
+- [HTTP Methods](#http-methods)
+
+</br>
+
+## OSI Layers
+The Open Systems Interconnection (OSI) model is a conceptual framework that describes how network communication occurs. It has seven layers:
+
+</br>
+
+| Layer    |  Function   |  Data   | Whats in data? |
+| --- | --- | --- | -- |
+| Physical Layer |  Raw bit transmission over a physical medium. Deals with electrical signals, radio waves, or light pulses | Bits (0s and 1s). | It's the most basic form of data. |
+| Data Link Layer | Handles local network communication, including framing, MAC addressing, and error control. Divides the bit stream into manageable chunks. | Frames | Includes headers (MAC address), payload (nw layer data), trailer (error check info) |
+| Network Layer | Routes data packets between networks using IP addresses. Manages logical addressing and routing | Packet | Includes header (src and dst IP addr), payload (data from transport layer) |
+| Transport Layer | Provides reliable (TCP) or unreliable (UDP) end-to-end data delivery. Manages segmentation and reassembly of data. | Segments (TCP) or Datagrams (UDP) | Includes header (src and dest port numbers, sequence numbers), payload (data from session layer) |
+| Session Layer | Manages communication sessions between applications. Establishes, maintains, and terminates connections | Data is handled in form of session data | Session IDs, parameters, synchronization points etc. |
+| Presentation Layer | Handles data formatting, encryption, and compression. Ensures data is in a format that the receiving application can understand | Data is presented in the format the application layer requires | This layer translates data. It may encrypt or compress the application layer data.|
+| Application Layer | Provides network services to applications (HTTP, SMTP, etc.). This is the layer closest to the end user. | Application data | This is the data that the user interacts with (e.g., email messages, web pages, files). |
+
+</br>
+
+## What happens layer wise when I google "cat facts" ?
+### Application Layer (Your Browser):
+- You type "cat facts" into your browser's search bar and press Enter.
+- Your browser (the application) creates an HTTP request, which is the data at this layer.
+- This request is passed down to the Presentation Layer.
+### Presentation Layer:
+- The request is formatted for transmission. This might involve:
+- Encoding the data into a standard format (e.g., UTF-8 [character encoding standard]).
+- Encrypting the data (if it's an HTTPS request) for secure transmission.
+- The formatted data is passed down to the Session Layer.
+### Session Layer:
+- A session is established between your browser and Google's web server.
+- This layer manages the communication dialogue, ensuring that the request and response are properly handled.
+- The session data is passed to the transport layer.
+### Transport Layer:
+- The data is broken into **segments** (if using TCP, which is typical for HTTP).
+- Port numbers are added to the segments (e.g., port 80 for HTTP or 443 for HTTPS) to identify the browser and web server applications.
+- Sequence numbers are added for reliable delivery.
+- The segments (or datagrams if it was UDP) are passed down to the Network Layer.
+### Network Layer:
+- IP addresses are added to the segments, indicating your computer's IP address (source) and Google's web server's IP address (destination).
+- The segments are now called **packets**.
+- The packets are passed down to the Data Link Layer.
+### Data Link Layer:
+- MAC addresses are added to the packets, indicating your computer's network interface card (NIC) MAC address (source) and the MAC address of the next hop (e.g., your router).
+- The packets are now called frames.
+- Error-checking information (CRC) is added to the **frames**.
+- The frames are passed down to the Physical Layer.
+### Physical Layer:
+- The frames are converted into a stream of **bits**.
+- These bits are transmitted over the physical medium (e.g., Ethernet cable, Wi-Fi).
+- The bits travel through your local network, to your internet service provider (ISP), and then across the internet to Google's servers.
+
+</br>
+
+>> Google's servers receive the bits, and the process is reversed. The bits are converted back into frames, packets, segments, and finally, application data. Google's servers process your search request and generate a response. The response data then travels back through the layers starting from physical layer.
+
+</br>
 
 ## TCP 3-way handshake
 - Process used to establish connection between a client (your browser) and a server (google.com)
