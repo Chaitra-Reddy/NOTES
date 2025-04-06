@@ -37,12 +37,9 @@
 - [ls](#ls)
 - [HTTP Methods](#http-methods)
 
-</br>
-
-## OSI Layers
+## OSI Model
 The Open Systems Interconnection (OSI) model is a conceptual framework that describes how network communication occurs. It has seven layers:
 
-</br>
 
 | Layer    |  Function   |  Data   | Whats in data? |
 | --- | --- | --- | -- |
@@ -54,9 +51,29 @@ The Open Systems Interconnection (OSI) model is a conceptual framework that desc
 | Presentation Layer | Handles data formatting, encryption, and compression. Ensures data is in a format that the receiving application can understand | Data is presented in the format the application layer requires | This layer translates data. It may encrypt or compress the application layer data.|
 | Application Layer | Provides network services to applications (HTTP, SMTP, etc.). This is the layer closest to the end user. | Application data | This is the data that the user interacts with (e.g., email messages, web pages, files). |
 
-</br>
+## TCP/IP Model
+Fundamentally, both the TCP/IP and OSI models are conceptual frameworks that describe how different layers of networking protocols work together to enable communication. However, they differ in their structure and focus.
+### Key Differences:
+#### Number of Layers:
+- The OSI model has seven layers, while the TCP/IP model has four.   
+#### Focus:
+- The OSI model is a more theoretical model, intended to provide a comprehensive framework for network communication.   
+- The TCP/IP model is a more practical model, designed specifically for the implementation of the internet protocol suite.   
+#### Layer Functions:
+- Some layers in the OSI model are combined or have slightly different functions in the TCP/IP model. For example, the TCP/IP Application layer combines the functions of the OSI Application, Presentation, and Session layers. 
+#### Adoption:
+- The TCP/IP model is the model that the internet is built upon, and is the model that is used in practice. The OSI model is used more for educational purposes.
 
-## What happens layer wise when I google "cat facts" ?
+## TCP/IP vs OSI model
+| TCP/IP Layer | OSI Layer | Key differences |
+| -- | -- | -- |
+| Network Access Layer | Physical and Data Link Layer | TCP/IP combines the physical transmission and local network addressing into one layer. OSI separates these functions. |
+| Internet Layer | Network Layer | These layers are functionally very similar, both handling logical addressing (IP) and routing. |
+| Transport Layer | Transport Layer | These layers are also functionally very similar, providing end-to-end communication (TCP, UDP). |
+| Application Layer | Application Layer, Presentation Layer, Session Layer | TCP/IP combines the application-specific services, data formatting/translation, and session management into a single layer. OSI separates these functions. |
+
+
+## What happens layer wise when you google "cat facts" ?
 ### Application Layer (Your Browser):
 - You type "cat facts" into your browser's search bar and press Enter.
 - Your browser (the application) creates an HTTP request, which is the data at this layer.
@@ -93,36 +110,7 @@ The Open Systems Interconnection (OSI) model is a conceptual framework that desc
 
 >> Google's servers receive the bits, and the process is reversed. The bits are converted back into frames, packets, segments, and finally, application data. Google's servers process your search request and generate a response. The response data then travels back through the layers starting from physical layer.
 
-</br>
-
-## TCP 3-way handshake
-- Process used to establish connection between a client (your browser) and a server (google.com)
-- sequence numbers here are used to track data packets transmitted during the connection
-
-#### Step 1 >> SYN >> client to server
-- src IP and port (client ip and port)
-- dest IP and port (server ip and port)
-- random client sequence number (ISN - initial sequence number)
-#### Step 2 >> SYN-ACK >> server to client
-- src IP and port (server ip and port)
-- dest IP and port (client ip and port)
-- client sequence number (ISN) + 1 (ack)
-- random server sequence number (ISN)
-#### Step 3 >> ACK >> client to server
-- src IP and port (client ip and port)
-- dest IP and port (server ip and port)
-- server sequence number (ISN) + 1 (ack)
-
-## TCP 4-way handshake
-- Process used to terminate or teardown a TCP connection
-- When a server/client sends a FIN packet, it means it does not have any more data to send
-- This process helps maintain reliability and integrity of TCP connections
-- Step 1 >> FIN >> client to server
-- Step 2 >> ACK >> server to client
-- Step 3 >> FIN >> server to client
-- Step 4 >> ACK >> client to server
-
-## What happens when I search something on Google?
+## What happens when you generally search something on Google?
 ### 1) DNS Resolution
 - When you type "google.com" into your browser, first thing that your computer does is a DNS lookup (Domain Name System)
 - DNS lookup >> Sends a DNS query to a DNS server (provided by internet provider)
@@ -150,42 +138,49 @@ The Open Systems Interconnection (OSI) model is a conceptual framework that desc
 - Your browser then renders the HTML, CSS and JavaScript in the response to display the search results on your screen
 - The browser then may make further network requests to pull images or other resources as needed.
 
-## OSI Model
-Imagine sending a letter. The OSI (Open Systems Interconnection) model is like a set of rules that break down that process into seven simple steps, ensuring everyone understands how to send and receive information over a network. **(Please Do Not Throw Sausage Pizza Away)**
+## Handshakes
+### TCP 3-way handshake
+- Process used to establish connection between a client (your browser) and a server (google.com)
+- sequence numbers here are used to track data packets transmitted during the connection
+#### Step 1 >> SYN >> client to server
+- src IP and port (client ip and port)
+- dest IP and port (server ip and port)
+- random client sequence number (ISN - initial sequence number)
+#### Step 2 >> SYN-ACK >> server to client
+- src IP and port (server ip and port)
+- dest IP and port (client ip and port)
+- client sequence number (ISN) + 1 (ack)
+- random server sequence number (ISN)
+#### Step 3 >> ACK >> client to server
+- src IP and port (client ip and port)
+- dest IP and port (server ip and port)
+- server sequence number (ISN) + 1 (ack)
 
-Here's a breakdown of the seven layers, from the bottom up:
-### Physical Layer (Layer 1):
-- This is the "hardware" layer.
-- It deals with the actual cables, wires, and signals that transmit data.
-- Think of it as the physical road the letter travels on.
-### Data Link Layer (Layer 2):
-- This layer handles the reliable transfer of data between two directly connected devices.
-- It's like making sure the letter gets from one street to the next without getting lost.
-- It handles things like MAC addresses.
-### Network Layer (Layer 3):
-- This layer handles routing data across multiple networks.
-- It's like the postal service figuring out the best route for your letter to reach its destination.
-- It handles IP addresses.
-### Transport Layer (Layer 4):
-- This layer ensures that data is delivered reliably and in the correct order.
-- It's like making sure all the pages of your letter arrive in the right sequence.
-- This is where TCP and UDP operate.
-### Session Layer (Layer 5):
-- This layer manages the "conversation" between two applications.
-- It's like setting up and maintaining a phone call.
-- It establishes, manages, and terminates connections.
-### Presentation Layer (Layer 6):
-- This layer translates data into a format that applications can understand.
-- It's like translating a letter from one language to another.
-- It handles data encryption and compression.
-### Application Layer (Layer 7):
-- This is the layer that users interact with.
-- It's like the actual letter you write or the email you send.
-- This is where HTTP, FTP, and other application protocols operate.
+### TCP 4-way handshake
+- Process used to terminate or teardown a TCP connection
+- When a server/client sends a FIN packet, it means it does not have any more data to send
+- This process helps maintain reliability and integrity of TCP connections
+- Step 1 >> FIN >> client to server
+- Step 2 >> ACK >> server to client
+- Step 3 >> FIN >> server to client
+- Step 4 >> ACK >> client to server
 
-In essence, the OSI model provides a structured way to understand how data travels across a network, with each layer handling a specific aspect of the communication process.
+## Protocols
+### TCP (Transmission Control Protocol)
+- **Reliable**: Guarantees data delivery.
+- **Connection-oriented**: Establishes a connection first.
+- **Ordered**: Data arrives in the correct sequence.
+- **Slower**: Due to reliability checks.
+- **Used for**: Web browsing, file transfer, email.
 
-## HTTP
+### UDP (User Datagram Protocol)
+- **Unreliable**: Does not guarantee delivery.
+- **Connectionless**: Sends data without establishing a connection.
+- **Fast: Lower** overhead, faster transmission.
+- **Out-of-order**: Packets may arrive in any sequence.
+- **Used for**: Streaming, gaming, VoIP.
+
+### HTTP
 - Language used by web browsers and web servers to talk to each other
 - Works on **request-response** model
 - **Text based** >> uses plain text to communicate
@@ -193,23 +188,74 @@ In essence, the OSI model provides a structured way to understand how data trave
 - **Uses TCP** >> Relies on TCP to ensure reliable delivery of data
 - **Action based** >> HTP defines specific actions that can be performed like GET, POST, PATCH, PUT
 
-## TLS
-- Stands for **Transport Layer Security**
-- Protocol designed to provide communication security over a network
-- Primarity used to encrypt communication between web browsers and web servers
-- TLS uses **encryption** to scramble data and uses **authentication** to verify the identity of server using digital certificates.
+### TLS (Transport Layer Security) (v1.3)
 - TLS is successor to SSL (Secure Sockets Layer)
+- **Security protocol**: Encrypts data for secure communication.
+- **Ensures privacy**: Prevents eavesdropping.
+- **Authentication**: Verifies the identity of the server.
+- **Used with**: HTTPS (secure web browsing), email, and other applications.
+- **Provides**: Confidentiality, integrity, and authentication.
+#### What layer does it work on?
+- TLS doesn't fit perfectly into a single layer
+- TLS operates between the Transport Layer (TCP) and the Application Layer.
+- **Transport Layer (TCP)**: TLS relies on TCP's reliable connection. TCP ensures that the encrypted data arrives in the correct order without errors.
+- **Application Layer**: Applications like web browsers (HTTPS), email clients (SMTPS, IMAPS), and other secure communication tools use TLS to protect their data.
+- **TLS's Role**: It takes the application data (e.g., HTTP requests, email messages) and encrypts it before it's passed down to TCP. It also decrypts the data received from TCP before passing it to the application.
+#### TLS Handshake
+- **Client Hello**: Your browser (the client) sends a "Client Hello" message to the website's server. This message includes the TLS version, supported encryption methods, and a random number.
+- **Server Hello**: The server responds with a "Server Hello" message, which includes its chosen TLS version, encryption method, and its own random number. It also sends its digital certificate.
+- **Certificate Verification**: Your browser verifies the server's certificate. This involves:
+  - Checking if the certificate is issued by a trusted Certificate Authority (CA).
+  - Verifying that the certificate's domain name matches the website's address.
+  - Checking the certificate's expiration date.
+- **Key Exchange**: Your browser generates a pre-master secret, encrypts it with the server's public key (from the certificate), and sends it to the server.
+- **Session Key Generation**: Both the browser and the server use the random numbers and the pre-master secret to generate a shared secret key (the session key). This key will be used to encrypt and decrypt the actual data.
+- **Encrypted Communication**: All subsequent data exchanged between the browser and the server is encrypted using the session key.
 
-## TLS Handshake
-- User's browser connects to a website using HTTPS
-- The server sends its digital certificate to the browser
-- The browser checks the certificate
-    - Checks if its issued by trusted CA
-    - Checks if cert domain name matches website's domain 
-    name
-    - Uses the public key from certificate to encrypt data
-- If cert is valid, browser and server establish a secure and encrypted connection
-- All data exchanged between browser and server is encrypted using the public key of the certificate
+## DNS
+- Stands for Domain Name System
+- Essentially the internet's phonebook. Converts human-readable domain namnes into machine-readable IP addresses
+### Step-by-step DNS Lookup
+#### Browser Request:
+- You type www.example.com into your browser's address bar and press Enter.
+- Your browser needs the IP address of www.example.com to connect to the website's server.
+#### Local DNS Cache Check:
+- Your computer first checks its local DNS cache. It might have stored the IP address from a previous visit.
+- If the IP address is found (and hasn't expired), the lookup stops here, and your browser connects to the server using the cached IP.
+#### DNS Resolver Query:
+- If the IP address isn't in your local cache, your computer sends a DNS query to your configured DNS resolver (usually your ISP's DNS server).
+- This resolver will now take on the task of finding the correct IP.
+#### Root Server Query:
+- The resolver first contacts a root DNS server.
+- Root servers don't know the IP of www.example.com directly, but they know the addresses of the TLD (Top-Level Domain) servers for .com.
+- The root server responds with the addresses of the .com TLD servers.
+#### TLD Server Query:
+- The resolver then queries a .com TLD server.
+- The .com TLD server knows the addresses of the authoritative name servers for the example.com domain.
+- The .com TLD server responds with the addresses of the example.com authoritative name servers.
+#### Authoritative Name Server Query:
+- The resolver finally queries one of the example.com authoritative name servers.
+- These servers hold the actual DNS records for the example.com domain, including the A record that maps www.example.com to its IP address.
+- The authoritative name server responds with the IP address of www.example.com.
+#### Resolver Response:
+- The resolver receives the IP address from the authoritative name server.
+- The resolver stores (caches) this IP address for a specified time (TTL - Time To Live) to speed up future lookups.
+- The resolver sends the IP address back to your computer.
+#### Browser Connection:
+- Your computer receives the IP address.
+- Your browser uses this IP address to establish a connection with the www.example.com server.
+- The website's content is then displayed in your browser.
+
+### Common DNS record types:
+- A: IPv4 address.
+- AAAA: IPv6 address.
+- CNAME: Domain alias.
+- MX: Mail server.
+- NS: Name server.
+- TXT: Text data.
+- SOA: Zone info.
+- PTR: IP to domain.
+- SRV: Service location.
 
 # Linux commands
 
